@@ -1,0 +1,1 @@
+# shyfter-table-generator
