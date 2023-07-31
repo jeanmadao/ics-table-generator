@@ -1,7 +1,7 @@
 # ics-table-generator
 
-Python script automatically generating a schedule Excel(.xlsx) table file from a .ics file.
-Chances are you won't really need this as much as I do.
+Python script automatically generating a schedule Excel(.xlsx) table file from a .ics file.\
+Chances are you won't need this as much as I do.
 
 ## Dependencies
 
