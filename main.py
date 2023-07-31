@@ -1,41 +1,19 @@
 import os
 import requests
-import datetime
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 from dotenv import load_dotenv
 from openpyxl import Workbook
 
+from style import style_worksheet
+from functions import parse_timedate
+
 load_dotenv()
-SCHEDULE_ICS_URL = os.getenv('SCHEDULE_ICS_URL')
-
 wb = Workbook()
-
 ws = wb.active
 
 ws.append(["Date", "Location", "Start", "End", "Hours"])
-ws.row_dimensions[1].font = Font(bold=True,
-                                 color='FFFFFF',
-                                 name='Arial')
 
-ws.row_dimensions[1].fill = PatternFill("solid", fgColor="4285F4")
-
-ws.column_dimensions['A'].width = 11
-
-
-def parse_timedate(ICS_line):
-    ICS_line, timedate = ICS_line.split(':')
-    date, time = timedate.split('T')
-    year = date[:4]
-    month = date[4:6]
-    day = date[6:8]
-    hour = time[:2]
-    minute = time[2:4]
-    second = time[4:6]
-    ICS_line, timezone = ICS_line.split('=')
-
-    return datetime.date(int(year), int(month), int(day)), datetime.time(int(hour), int(minute), int(second))
-
-ICS = requests.get(SCHEDULE_ICS_URL).text.split('\r\n')
+ICS = requests.get(os.getenv('SCHEDULE_ICS_URL')).text.split('\r\n')
 
 lines_nb = len(ICS)
 workdays = []
@@ -60,9 +38,7 @@ for workday in workdays:
 
 ws[f'A{row}'] = "Total"
 ws[f'E{row}'] = f'=SUM(E2:E{row - 1})'
-ws.row_dimensions[row].fill = PatternFill("solid", fgColor="EA4335")
-ws.row_dimensions[row].font = Font(bold=True,
-                                 color='FFFFFF',
-                                 name='Arial')
 
-wb.save("kafei.xlsx")
+style_worksheet(ws, row, 5)
+
+wb.save(os.getenv('OUTPUT_PATH'))
