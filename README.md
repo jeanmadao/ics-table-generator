@@ -1,1 +1,1 @@
-# shyfter-table-generator
+# ics-table-generator
