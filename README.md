@@ -5,7 +5,7 @@ Python script automatically generating a schedule Excel(.xlsx) table file.
 ## Dependencies
 
 - [python3](https://www.python.org/downloads/)
-- [pip](https://github.com/pypa/pip)(optional)
+- [pip](https://github.com/pypa/pip) (optional)
 - [python-dotenv](https://github.com/theskumar/python-dotenv)
 - [requests](https://github.com/psf/requests)
 - [openpyxl](https://foss.heptapod.net/openpyxl/openpyxl)
