@@ -12,12 +12,14 @@ wb = Workbook()
 
 ws = wb.active
 
-ws.append(["Date", "Start", "End", "Hours"])
+ws.append(["Date", "Location", "Start", "End", "Hours"])
 ws.row_dimensions[1].font = Font(bold=True,
                                  color='FFFFFF',
                                  name='Arial')
 
 ws.row_dimensions[1].fill = PatternFill("solid", fgColor="4285F4")
+
+ws.column_dimensions['A'].width = 11
 
 
 def parse_timedate(ICS_line):
@@ -45,13 +47,22 @@ while i < lines_nb:
             while not ICS[i].startswith('DTEND;'):
                 i += 1
             end_date, end_time = parse_timedate(ICS[i])
-            workdays.append((start_date, start_time, end_time))
+            workdays.append((start_date, "Louise", start_time, end_time))
     i += 1
 
 workdays.sort(key=lambda workday: workday[0])
 
+row = 2
 for workday in workdays:
-    start_date, start_time, end_time = workday
-    ws.append([start_date.strftime('%d/%m/%Y'), start_time, end_time, datetime.datetime.combine(datetime.date.min, end_time) - datetime.datetime.combine(datetime.date.min, start_time)])
+    start_date, location, start_time, end_time = workday
+    ws.append([start_date.strftime('%d/%m/%Y'), location, start_time, end_time, f'=D{row} - C{row}'])
+    row += 1
+
+ws[f'A{row}'] = "Total"
+ws[f'E{row}'] = f'=SUM(E2:E{row - 1})'
+ws.row_dimensions[row].fill = PatternFill("solid", fgColor="EA4335")
+ws.row_dimensions[row].font = Font(bold=True,
+                                 color='FFFFFF',
+                                 name='Arial')
 
 wb.save("kafei.xlsx")
