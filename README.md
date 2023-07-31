@@ -1,9 +1,12 @@
 # ics-table-generator
 
-Python script automatically generating a schedule Excel(.xlsx) table file.
+Python script automatically generating a schedule Excel(.xlsx) table file from a .ics file.\
+Chances are you won't need this as much as I do.
 
 ## Dependencies
 
+- [python3](https://www.python.org/downloads/)
+- [pip](https://github.com/pypa/pip) (optional)
 - [python-dotenv](https://github.com/theskumar/python-dotenv)
 - [requests](https://github.com/psf/requests)
 - [openpyxl](https://foss.heptapod.net/openpyxl/openpyxl)
@@ -17,5 +20,5 @@ pip install python-dotenv requests openpyxl
 Alternatively, these packages can be installed via with pacman on Arch-based distros:
 
 ```
-sudo pacman -S python-dotenv python-requests python-openpyxl
+sudo pacman -S python python-dotenv python-requests python-openpyxl
 ```
